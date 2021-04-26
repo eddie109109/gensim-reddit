@@ -34,34 +34,35 @@ reddit = praw.Reddit(
 # Help with a challenge
 # Need help saving user input to a file
 
-# titleList = []
+titleList = []
+numOfTopic = 20
 # the below for loop is for scrape the data from reddit
-# for submission in reddit.subreddit("learnpython").hot(limit=20):
-#     # print(submission.title) #uncomment to see all the titles
-#     titleList.append(submission.title)
+for submission in reddit.subreddit("Psychedelics").hot(limit=numOfTopic):
+    print(submission.title) #uncomment to see all the titles
+    titleList.append(submission.title)
 
 # since i do not want my data to change every day, i have decided to use the follwing 20 topics as the list for this test run, 
 # we can uncomment the above function to scrape new data
-titleList = ["Ask Anything Monday - Weekly Thread",
-"Tips on getting job as a python developer",
-"Advice on how to recursively edit all the filenames in my directory with a specific extension to include the folder name, please!",
-"Send email notification when a script generates an error",
-"Looking for Dancing Link/Algorithm X hints",
-"Blockchain Voting",
-"Python calculator failed need help",
-"Help!! I'm trying to open a text file through python",
-"Anyone good at using Dash?",
-"Constraining a Random Walk in python, how to make it work?",
-"Only do something when a line isn't in any line of a text file",
-"Are there any books or videos that describe how to organize large projects?",
-"Extracting JSON",
-"A desperate request to help me run a python script",
-"I'm an idiot, how do I do linear regression with sklearn?",
-'"reading too much input" error on number guessing game',
-"Scraping Data from Video Game?",
-"Putting data into dataframe by new line item?",
-"Help with a challenge",
-"Need help saving user input to a file"]
+# titleList = ["Ask Anything Monday - Weekly Thread",
+# "Tips on getting job as a python developer",
+# "Advice on how to recursively edit all the filenames in my directory with a specific extension to include the folder name, please!",
+# "Send email notification when a script generates an error",
+# "Looking for Dancing Link/Algorithm X hints",
+# "Blockchain Voting",
+# "Python calculator failed need help",
+# "Help!! I'm trying to open a text file through python",
+# "Anyone good at using Dash?",
+# "Constraining a Random Walk in python, how to make it work?",
+# "Only do something when a line isn't in any line of a text file",
+# "Are there any books or videos that describe how to organize large projects?",
+# "Extracting JSON",
+# "A desperate request to help me run a python script",
+# "I'm an idiot, how do I do linear regression with sklearn?",
+# '"reading too much input" error on number guessing game',
+# "Scraping Data from Video Game?",
+# "Putting data into dataframe by new line item?",
+# "Help with a challenge",
+# "Need help saving user input to a file"]
 
 
 #########################################start setting up most of the packages below, you might need to install each of them one by one using pip3
@@ -112,7 +113,9 @@ def sent_to_words(sentences):
 
 data_words = list(sent_to_words(titleList))
 
-print("After cleaning up the text: ", data_words[1:2]) ## get the first list of the list of sentences
+print("After cleaning up the text (separate each topic into individual word and put it into a list): ")
+print(data_words) 
+print("**************After cleaning up the text **************")
 ## will get the following list of the second list since the first list is just a non-changed heading: 
 # [['tips', 'on', 'getting', 'job', 'as', 'python', 'developer']]
 
@@ -124,10 +127,15 @@ trigram = gensim.models.Phrases(bigram[data_words], threshold=100)
 
 # Faster way to get a sentence clubbed as a trigram/bigram
 bigram_mod = gensim.models.phrases.Phraser(bigram)
+
 trigram_mod = gensim.models.phrases.Phraser(trigram)
 
 # See trigram example
-print("trigram example: ", trigram_mod[bigram_mod[data_words[1]]])
+print("trigram example: ")
+for i in range(numOfTopic):
+    print(trigram_mod[bigram_mod[data_words[i]]])
+print("************** End of trigram example **************")
+
 ## will get the following list:
 # ['tips', 'on', 'getting', 'job', 'as', 'python', 'developer']
 
@@ -169,7 +177,10 @@ nlp = spacy.load("en_core_web_sm")
 # Do lemmatization keeping only noun, adj, vb, adv
 data_lemmatized = lemmatization(data_words_bigrams, allowed_postags=['NOUN', 'ADJ', 'VERB', 'ADV'])
 
-print("After lemmatization: ", data_lemmatized[1:2])
+print("The result of lemmatization: ")
+print(data_lemmatized[0:])
+
+print("************** After lemmatization **************")
 
 
 # 11. Create the Dictionary and Corpus needed for Topic Modeling
@@ -184,7 +195,9 @@ corpus = [id2word.doc2bow(text) for text in texts]
 
 
 # View
-print("View the word frequency:", corpus[1:2])
+print("View the word frequency:")
+print(corpus[0:])
+print("************** The end of the word frequency **************")
 # Generate the following frequency list:
 # Based on [['tip', 'get', 'job', 'python', 'developer']]
 # [[(4, 1), (5, 1), (6, 1), (7, 1), (8, 1)]]
@@ -215,7 +228,8 @@ lda_model = gensim.models.ldamodel.LdaModel(corpus=corpus,
 
 # 13. View the topics in LDA model
 
-# Print the Keyword in the 10 topics
+# Print the Keyword in the 20 topics
+print("************** Print the keyword in the 20 topics below **************")
 pprint(lda_model.print_topics())
 doc_lda = lda_model[corpus]  
 
