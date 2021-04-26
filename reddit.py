@@ -219,9 +219,94 @@ lda_model = gensim.models.ldamodel.LdaModel(corpus=corpus,
 pprint(lda_model.print_topics())
 doc_lda = lda_model[corpus]  
 
+# below is the output
+# [(0,
+#   '0.013*"describe" + 0.013*"book" + 0.013*"desperate" + 0.013*"json" + '
+#   '0.013*"extract" + 0.013*"video" + 0.013*"project" + 0.013*"organize" + '
+#   '0.013*"large" + 0.013*"run"'),
+#  (1,
+#   '0.070*"file" + 0.070*"help" + 0.070*"input" + 0.070*"need" + 0.070*"user" + '
+#   '0.070*"save" + 0.070*"algorithm" + 0.070*"hint" + 0.070*"look" + '
+#   '0.070*"link"'),
+#  (2,
+#   '0.059*"notification" + 0.059*"email" + 0.059*"error" + 0.059*"send" + '
+#   '0.059*"script" + 0.059*"generate" + 0.059*"ask" + 0.059*"thread" + '
+#   '0.059*"monday" + 0.059*"weekly"'),
+#  (3,
+#   '0.212*"challenge" + 0.010*"describe" + 0.010*"line" + 0.010*"json" + '
+#   '0.010*"extract" + 0.010*"video" + 0.010*"project" + 0.010*"organize" + '
+#   '0.010*"large" + 0.010*"request"'),
+#  (4,
+#   '0.013*"describe" + 0.013*"book" + 0.013*"desperate" + 0.013*"json" + '
+#   '0.013*"extract" + 0.013*"video" + 0.013*"project" + 0.013*"organize" + '
+#   '0.013*"large" + 0.013*"run"'),
+#  (5,
+#   '0.013*"describe" + 0.013*"book" + 0.013*"desperate" + 0.013*"json" + '
+#   '0.013*"extract" + 0.013*"video" + 0.013*"project" + 0.013*"organize" + '
+#   '0.013*"large" + 0.013*"run"'),
+#  (6,
+#   '0.106*"video" + 0.105*"project" + 0.105*"large" + 0.105*"organize" + '
+#   '0.105*"describe" + 0.105*"book" + 0.005*"game" + 0.005*"data" + '
+#   '0.005*"scrape" + 0.005*"extract"'),
+#  (7,
+#   '0.013*"describe" + 0.013*"book" + 0.013*"desperate" + 0.013*"json" + '
+#   '0.013*"extract" + 0.013*"video" + 0.013*"project" + 0.013*"organize" + '
+#   '0.013*"large" + 0.013*"run"'),
+#  (8,
+#   '0.176*"extract" + 0.176*"json" + 0.008*"describe" + 0.008*"book" + '
+#   '0.008*"desperate" + 0.008*"video" + 0.008*"project" + 0.008*"organize" + '
+#   '0.008*"large" + 0.008*"run"'),
+#  (9,
+#   '0.117*"need" + 0.117*"calculator" + 0.117*"help" + 0.117*"python" + '
+#   '0.117*"fail" + 0.006*"organize" + 0.006*"large" + 0.006*"extract" + '
+#   '0.006*"video" + 0.006*"json"'),
+#  (10,
+#   '0.187*"line" + 0.096*"text" + 0.096*"file" + 0.096*"good" + 0.096*"use" + '
+#   '0.096*"dash" + 0.005*"describe" + 0.005*"organize" + 0.005*"book" + '
+#   '0.005*"work"'),
+#  (11,
+#   '0.013*"describe" + 0.013*"book" + 0.013*"desperate" + 0.013*"json" + '
+#   '0.013*"extract" + 0.013*"video" + 0.013*"project" + 0.013*"organize" + '
+#   '0.013*"large" + 0.013*"run"'),
+#  (12,
+#   '0.075*"specific" + 0.075*"include" + 0.075*"folder" + 0.075*"filename" + '
+#   '0.075*"recursively" + 0.075*"edit" + 0.075*"directory" + 0.075*"advice" + '
+#   '0.075*"name" + 0.075*"extension"'),
+#  (13,
+#   '0.081*"work" + 0.081*"make" + 0.081*"random" + 0.081*"walk" + '
+#   '0.081*"constrain" + 0.081*"python" + 0.081*"linear" + 0.081*"regression" + '
+#   '0.081*"idiot" + 0.004*"dancing"'),
+#  (14,
+#   '0.013*"describe" + 0.013*"book" + 0.013*"desperate" + 0.013*"json" + '
+#   '0.013*"extract" + 0.013*"video" + 0.013*"project" + 0.013*"organize" + '
+#   '0.013*"large" + 0.013*"run"'),
+#  (15,
+#   '0.117*"tip" + 0.117*"job" + 0.117*"developer" + 0.117*"get" + '
+#   '0.117*"python" + 0.006*"video" + 0.006*"extract" + 0.006*"json" + '
+#   '0.006*"organize" + 0.006*"desperate"'),
+#  (16,
+#   '0.093*"help" + 0.093*"python" + 0.048*"dataframe" + 0.048*"put" + '
+#   '0.048*"run" + 0.048*"request" + 0.048*"open" + 0.048*"datum" + 0.048*"line" '
+#   '+ 0.048*"try"'),
+#  (17,
+#   '0.096*"guess" + 0.096*"number" + 0.096*"read" + 0.096*"error" + '
+#   '0.096*"game" + 0.096*"much" + 0.096*"input" + 0.005*"video" + 0.005*"large" '
+#   '+ 0.005*"project"'),
+#  (18,
+#   '0.176*"blockchain" + 0.176*"voting" + 0.008*"json" + 0.008*"extract" + '
+#   '0.008*"video" + 0.008*"project" + 0.008*"organize" + 0.008*"large" + '
+#   '0.008*"describe" + 0.008*"request"'),
+#  (19,
+#   '0.013*"describe" + 0.013*"book" + 0.013*"desperate" + 0.013*"json" + '
+#   '0.013*"extract" + 0.013*"video" + 0.013*"project" + 0.013*"organize" + '
+#   '0.013*"large" + 0.013*"run"')]
+
+
 # 14. Compute Model Perplexity and Coherence Score
 # Compute Perplexity
 print('\nPerplexity: ', lda_model.log_perplexity(corpus))  # a measure of how good the model is. lower the better.
+# Perplexity:  -5.775213731318405
+
 
 # Compute Coherence Score
 coherence_model_lda = CoherenceModel(model=lda_model, texts=data_lemmatized, dictionary=id2word, coherence= "c_v")
