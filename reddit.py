@@ -195,8 +195,8 @@ corpus = [id2word.doc2bow(text) for text in texts]
 
 
 # View
-print("View the word frequency:")
-print(corpus[0:])
+print("View the word frequency: (corpus)")
+print(corpus)
 print("************** The end of the word frequency **************")
 # Generate the following frequency list:
 # Based on [['tip', 'get', 'job', 'python', 'developer']]
@@ -208,7 +208,11 @@ print("************** The end of the word frequency **************")
 # This is used as the input by the LDA model.
 
 # Human readable format of corpus (term-frequency)
-[[(id2word[id], freq) for id, freq in cp] for cp in corpus[1:2]]
+termFrequencyList = [[(id2word[id], freq) for id, freq in cp] for cp in corpus[0:]]
+print("**************** printing hunman readable format of corpus ****************")
+for i in range(len(termFrequencyList)):
+    print(termFrequencyList[i])
+print("**************** end of printing hunman readable format of corpus ****************")
 
 
 # 12. Building the Topic Model
