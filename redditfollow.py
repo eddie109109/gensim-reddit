@@ -55,12 +55,12 @@ df = pd.read_json('https://raw.githubusercontent.com/selva86/datasets/master/new
 
 # df = pd.read_json('{\"content\":{\"0\": \"From: sfasf\"},\"target\": 31,\"target_names\": \"rec.autos\"}')
 # df = pd.read_json('{\"content\":{\"1\": \"From: fxsadfsad\"}, \"target\": 31, \"target_names\": \"misc.forsale\"}')
-# print(df.target_names.unique())
+print(df.target_names.unique())
 # df.head() 
 
 # print(df)
-# print(type(df))
-pprint(type(df.content.values)) 
+
+
 
 
 
@@ -73,12 +73,12 @@ pprint(type(df.content.values))
 # # pprint(data[:1]) 
 # # print(data)
 
-data = ['rec.autos' 'comp.sys.mac.hardware' 'comp.graphics' 'sci.space'
- 'talk.politics.guns' 'sci.med' 'comp.sys.ibm.pc.hardware'
- 'comp.os.ms-windows.misc' 'rec.motorcycles' 'talk.religion.misc'
- 'misc.forsale' 'alt.atheism' 'sci.electronics' 'comp.windows.x'
- 'rec.sport.hockey' 'rec.sport.baseball' 'soc.religion.christian'
- 'talk.politics.mideast' 'talk.politics.misc' 'sci.crypt']
+# data = ['rec.autos' 'comp.sys.mac.hardware' 'comp.graphics' 'sci.space'
+#  'talk.politics.guns' 'sci.med' 'comp.sys.ibm.pc.hardware'
+#  'comp.os.ms-windows.misc' 'rec.motorcycles' 'talk.religion.misc'
+#  'misc.forsale' 'alt.atheism' 'sci.electronics' 'comp.windows.x'
+#  'rec.sport.hockey' 'rec.sport.baseball' 'soc.religion.christian'
+#  'talk.politics.mideast' 'talk.politics.misc' 'sci.crypt']
 
 # it produced the following result:
 # ['rec.autos' 'comp.sys.mac.hardware' 'rec.motorcycles' 'misc.forsale'
@@ -89,15 +89,15 @@ data = ['rec.autos' 'comp.sys.mac.hardware' 'comp.graphics' 'sci.space'
 #  'talk.politics.guns' 'talk.religion.misc' 'sci.crypt']
 
 # Convert to list
-# data = df.content.values.tolist()
-# # Remove Emails
-# data = [re.sub('\S*@\S*\s?', '', sent) for sent in data]
-# # Remove new line characters
-# data = [re.sub('\s+', ' ', sent) for sent in data]
-# # Remove distracting single quotes
-# data = [re.sub("\'", "", sent) for sent in data]
+data = df.content.values.tolist()
+# Remove Emails
+data = [re.sub('\S*@\S*\s?', '', sent) for sent in data]
+# Remove new line characters
+data = [re.sub('\s+', ' ', sent) for sent in data]
+# Remove distracting single quotes
+data = [re.sub("\'", "", sent) for sent in data]
 
-# pprint(data[:1])
+pprint(data[1:2])
 
 # I got the following message when I print the above:
 # ['From: (wheres my thing) Subject: WHAT car is this!? Nntp-Posting-Host: '
@@ -121,13 +121,13 @@ data = ['rec.autos' 'comp.sys.mac.hardware' 'comp.graphics' 'sci.space'
 # Let’s tokenize each sentence into a list of words, 
 # removing punctuations and unnecessary characters altogether.
 
-# def sent_to_words(sentences):
-#     for sentence in sentences:
-#         yield(gensim.utils.simple_preprocess(str(sentence), deacc=True))  # deacc=True removes punctuations
+def sent_to_words(sentences):
+    for sentence in sentences:
+        yield(gensim.utils.simple_preprocess(str(sentence), deacc=True))  # deacc=True removes punctuations
 
-# data_words = list(sent_to_words(data))
+data_words = list(sent_to_words(data))
 
-# print(data_words[:1]) # comment out this part 
+print(data_words[1:2]) # comment out this part 
 
 # after printing the above, we get the following data
 # [['from', 'wheres', 'my', 'thing', 'subject', 'what', 'car', 'is', 'this', 'nntp', 'posting', 'host', 'rac', 
@@ -148,16 +148,17 @@ data = ['rec.autos' 'comp.sys.mac.hardware' 'comp.graphics' 'sci.space'
 
 # Build the bigram and trigram models
 
-# bigram = gensim.models.Phrases(data_words, min_count=5, threshold=100) # higher threshold fewer phrases.
-# trigram = gensim.models.Phrases(bigram[data_words], threshold=100)  
+bigram = gensim.models.Phrases(data_words, min_count=5, threshold=100) # higher threshold fewer phrases.
+trigram = gensim.models.Phrases(bigram[data_words], threshold=100)  
 
 
 # Faster way to get a sentence clubbed as a trigram/bigram
-# bigram_mod = gensim.models.phrases.Phraser(bigram)
-# trigram_mod = gensim.models.phrases.Phraser(trigram)
+bigram_mod = gensim.models.phrases.Phraser(bigram)
+trigram_mod = gensim.models.phrases.Phraser(trigram)
 
 # See trigram example
-# print(trigram_mod[bigram_mod[data_words[0]]])
+print("printing trigram example below")
+print(trigram_mod[bigram_mod[data_words[1]]])
 
 # below is the output:
 # ['from', 'wheres', 'my', 'thing', 'subject', 'what', 'car', 'is', 'this', 'nntp_posting_host',
@@ -178,46 +179,49 @@ data = ['rec.autos' 'comp.sys.mac.hardware' 'comp.graphics' 'sci.space'
 # the difference between print(data_words[:1]) and 
 # print(trigram_mod[bigram_mod[data_words[0]]]) 
 # is that the second part creates a list instead of a list of a list
+# also combining some of the words together
 
 # 10. Remove Stopwords, Make Bigrams and Lemmatize
 
 # Define functions for stopwords, bigrams, trigrams and lemmatization
-# def remove_stopwords(texts):
-#     return [[word for word in simple_preprocess(str(doc)) if word not in stop_words] for doc in texts]
+def remove_stopwords(texts):
+    return [[word for word in simple_preprocess(str(doc)) if word not in stop_words] for doc in texts]
 
-# def make_bigrams(texts):
-#     return [bigram_mod[doc] for doc in texts]
+def make_bigrams(texts):
+    return [bigram_mod[doc] for doc in texts]
 
-# def make_trigrams(texts):
-#     return [trigram_mod[bigram_mod[doc]] for doc in texts]
+def make_trigrams(texts):
+    return [trigram_mod[bigram_mod[doc]] for doc in texts]
 
-# def lemmatization(texts, allowed_postags=['NOUN', 'ADJ', 'VERB', 'ADV']):
-#     """https://spacy.io/api/annotation"""
-#     texts_out = []
-#     for sent in texts:
-#         doc = nlp(" ".join(sent)) 
-#         texts_out.append([token.lemma_ for token in doc if token.pos_ in allowed_postags])
-#     return texts_out
+def lemmatization(texts, allowed_postags=['NOUN', 'ADJ', 'VERB', 'ADV']):
+    """https://spacy.io/api/annotation"""
+    texts_out = []
+    for sent in texts:
+        doc = nlp(" ".join(sent)) 
+        texts_out.append([token.lemma_ for token in doc if token.pos_ in allowed_postags])
+    return texts_out
 
 # Remove Stop Words
 
-# data_words_nostops = remove_stopwords(data_words)
+data_words_nostops = remove_stopwords(data_words)
 
 # Form Bigrams
 
-# data_words_bigrams = make_bigrams(data_words_nostops)
+data_words_bigrams = make_bigrams(data_words_nostops)
 
 # Initialize spacy 'en' model, keeping only tagger component (for efficiency)
 # python3 -m spacy download en
 
 # nlp = spacy.load('en', disable=['parser', 'ner'])
-# nlp = spacy.load("en_core_web_sm", disable=['parser', 'ner'])
+nlp = spacy.load("en_core_web_sm", disable=['parser', 'ner'])
 
 # Do lemmatization keeping only noun, adj, vb, adv
 
 # data_lemmatized = lemmatization(data_words_bigrams, allowed_postags=['NOUN', 'ADJ', 'VERB', 'ADV'])
+data_lemmatized = lemmatization(data_words_bigrams, allowed_postags=['NOUN'])
 
-# print(data_lemmatized[:1]) # we can comment out the printing step
+print("printing the lemmatized list of words")
+print(data_lemmatized[1:2]) # we can comment out the printing step
 
 # [['where', 's', 'thing', 'car', 'nntp_post', 'host', 'rac_wam', 'umd', 'organization',
 #  'university', 'maryland_college', 'park', 'line', 'wonder', 'anyone', 'could', 'enlighten', 
@@ -229,18 +233,22 @@ data = ['rec.autos' 'comp.sys.mac.hardware' 'comp.graphics' 'sci.space'
 
 
 # Create Dictionary
-# id2word = corpora.Dictionary(data_lemmatized)
+id2word = corpora.Dictionary(data_lemmatized)
 
 # Create Corpus
-# texts = data_lemmatized
+texts = data_lemmatized
 
 # Term Document Frequency
-# corpus = [id2word.doc2bow(text) for text in texts]
+corpus = [id2word.doc2bow(text) for text in texts]
 
 # View
-# print(corpus[:1])
+print("view the second piece from the corpus")
+print(corpus[1:2])
 
-# print([[(id2word[id], freq) for id, freq in cp] for cp in corpus[:1]])
+print("below will indicate how many times each word appears")
+termFrequencyList = [[(id2word[id], freq) for id, freq in cp] for cp in corpus[1:2]]
+for i in range(len(termFrequencyList)):
+    print(termFrequencyList[i])
 
 # the above will print out the following result, indicating how many times each word appears
 # esp: car appears 5 times
@@ -255,20 +263,20 @@ data = ['rec.autos' 'comp.sys.mac.hardware' 'comp.graphics' 'sci.space'
 # 12. Building the Topic Model
 
 # Build LDA model
-# lda_model = gensim.models.ldamodel.LdaModel(corpus=corpus,
-#                                            id2word=id2word,
-#                                            num_topics=20, 
-#                                            random_state=100,
-#                                            update_every=1,
-#                                            chunksize=100,
-#                                            passes=10,
-#                                            alpha='auto',
-#                                            per_word_topics=True)
+lda_model = gensim.models.ldamodel.LdaModel(corpus=corpus,
+                                           id2word=id2word,
+                                           num_topics=20, 
+                                           random_state=100,
+                                           update_every=1,
+                                           chunksize=100,
+                                           passes=10,
+                                           alpha='auto',
+                                           per_word_topics=True)
 
 
 # 13. View the topics in LDA model
-# pprint(lda_model.print_topics())
-# doc_lda = lda_model[corpus]
+pprint(lda_model.print_topics())
+doc_lda = lda_model[corpus]
 
 # [(0,
 #   '0.538*"ax" + 0.083*"_" + 0.043*"max" + 0.023*"internet" + 0.011*"family" + '

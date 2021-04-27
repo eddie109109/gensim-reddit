@@ -2,6 +2,8 @@
 # https://www.machinelearningplus.com/nlp/topic-modeling-gensim-python/#1introduction
 # we need to get a client_id and client_secret as a developer, we can follow the link below for more info
 # https://docs.google.com/document/d/1t_HyOwUI69MdRo46BZIzOTsAVpI7CjD100QRqiqkGWk/edit
+# The source code from gensim
+# https://radimrehurek.com/gensim/models/ldamodel.html#gensim.models.ldamodel.LdaState
 
 import praw
 
@@ -36,33 +38,32 @@ reddit = praw.Reddit(
 
 titleList = []
 numOfTopic = 20
-# the below for loop is for scrape the data from reddit
+# the below for loop is for scraping the data from reddit
 for submission in reddit.subreddit("Psychedelics").hot(limit=numOfTopic):
     print(submission.title) #uncomment to see all the titles
     titleList.append(submission.title)
 
-# since i do not want my data to change every day, i have decided to use the follwing 20 topics as the list for this test run, 
-# we can uncomment the above function to scrape new data
-# titleList = ["Ask Anything Monday - Weekly Thread",
-# "Tips on getting job as a python developer",
-# "Advice on how to recursively edit all the filenames in my directory with a specific extension to include the folder name, please!",
-# "Send email notification when a script generates an error",
-# "Looking for Dancing Link/Algorithm X hints",
-# "Blockchain Voting",
-# "Python calculator failed need help",
-# "Help!! I'm trying to open a text file through python",
-# "Anyone good at using Dash?",
-# "Constraining a Random Walk in python, how to make it work?",
-# "Only do something when a line isn't in any line of a text file",
-# "Are there any books or videos that describe how to organize large projects?",
-# "Extracting JSON",
-# "A desperate request to help me run a python script",
-# "I'm an idiot, how do I do linear regression with sklearn?",
-# '"reading too much input" error on number guessing game',
-# "Scraping Data from Video Game?",
-# "Putting data into dataframe by new line item?",
-# "Help with a challenge",
-# "Need help saving user input to a file"]
+# a sample output of 20 titles
+# Worth it.
+# I used to do this as a kid without even knowing.
+# The emesh method is my failsafe administration method for both DMT and 5-MeO
+# Psychedelics Could Help Treat the 463 Million People Coping with Diabetes
+# Alex Grey Necrophiliac Rumors along with allegations of hostile environment at CoSM
+# Evil trips
+# Struggling to implement lessons learned from tripping
+# To appease the gods👐
+# shroom for a new tripper
+# Great trip playlist
+# Need help: Shrooms and Acid in same weekend, is it recommended?
+# Meditating
+# triipy ar(en)t
+# Are you able to give yourself goosebumps?
+# “Word of Mouth” 36x48” oil on canvas by me. Enjoy 🤩 @grave.daisy on insta
+# Seizure on mushrooms + lingering effects
+# Orchestra on psychedelics.
+# PharmaTher Expands Patent Portfolio with Filing of US Patent Application for Ketamine and ...
+# Blue lotus
+# New Research Finds Promise in Psychiatric Use Of Psilocybin; North American Companies ...
 
 
 #########################################start setting up most of the packages below, you might need to install each of them one by one using pip3
@@ -114,10 +115,107 @@ def sent_to_words(sentences):
 data_words = list(sent_to_words(titleList))
 
 print("After cleaning up the text (separate each topic into individual word and put it into a list): ")
-print(data_words) 
+pprint(data_words) 
 print("**************After cleaning up the text **************")
-## will get the following list of the second list since the first list is just a non-changed heading: 
-# [['tips', 'on', 'getting', 'job', 'as', 'python', 'developer']]
+## the sample output below
+# [['worth', 'it'],
+#  ['used', 'to', 'do', 'this', 'as', 'kid', 'without', 'even', 'knowing'],
+#  ['the',
+#   'emesh',
+#   'method',
+#   'is',
+#   'my',
+#   'failsafe',
+#   'administration',
+#   'method',
+#   'for',
+#   'both',
+#   'dmt',
+#   'and',
+#   'meo'],
+#  ['psychedelics',
+#   'could',
+#   'help',
+#   'treat',
+#   'the',
+#   'million',
+#   'people',
+#   'coping',
+#   'with',
+#   'diabetes'],
+#  ['alex',
+#   'grey',
+#   'necrophiliac',
+#   'rumors',
+#   'along',
+#   'with',
+#   'allegations',
+#   'of',
+#   'hostile',
+#   'environment',
+#   'at',
+#   'cosm'],
+#  ['evil', 'trips'],
+#  ['struggling', 'to', 'implement', 'lessons', 'learned', 'from', 'tripping'],
+#  ['to', 'appease', 'the', 'gods'],
+#  ['shroom', 'for', 'new', 'tripper'],
+#  ['great', 'trip', 'playlist'],
+#  ['need',
+#   'help',
+#   'shrooms',
+#   'and',
+#   'acid',
+#   'in',
+#   'same',
+#   'weekend',
+#   'is',
+#   'it',
+#   'recommended'],
+#  ['meditating'],
+#  ['triipy', 'ar', 'en'],
+#  ['are', 'you', 'able', 'to', 'give', 'yourself', 'goosebumps'],
+#  ['word',
+#   'of',
+#   'mouth',
+#   'oil',
+#   'on',
+#   'canvas',
+#   'by',
+#   'me',
+#   'enjoy',
+#   'grave',
+#   'daisy',
+#   'on',
+#   'insta'],
+#  ['seizure', 'on', 'mushrooms', 'lingering', 'effects'],
+#  ['orchestra', 'on', 'psychedelics'],
+#  ['pharmather',
+#   'expands',
+#   'patent',
+#   'portfolio',
+#   'with',
+#   'filing',
+#   'of',
+#   'us',
+#   'patent',
+#   'application',
+#   'for',
+#   'ketamine',
+#   'and'],
+#  ['blue', 'lotus'],
+#  ['new',
+#   'research',
+#   'finds',
+#   'promise',
+#   'in',
+#   'psychiatric',
+#   'use',
+#   'of',
+#   'psilocybin',
+#   'north',
+#   'american',
+#   'companies']]
+
 
 
 # 9. Creating Bigram and Trigram Models
@@ -136,8 +234,27 @@ for i in range(numOfTopic):
     print(trigram_mod[bigram_mod[data_words[i]]])
 print("************** End of trigram example **************")
 
-## will get the following list:
-# ['tips', 'on', 'getting', 'job', 'as', 'python', 'developer']
+## will get the following sample output:
+# ['worth', 'it']
+# ['used', 'to', 'do', 'this', 'as', 'kid', 'without', 'even', 'knowing']
+# ['the', 'emesh', 'method', 'is', 'my', 'failsafe', 'administration', 'method', 'for', 'both', 'dmt', 'and', 'meo']
+# ['psychedelics', 'could', 'help', 'treat', 'the', 'million', 'people', 'coping', 'with', 'diabetes']
+# ['alex', 'grey', 'necrophiliac', 'rumors', 'along', 'with', 'allegations', 'of', 'hostile', 'environment', 'at', 'cosm']
+# ['evil', 'trips']
+# ['struggling', 'to', 'implement', 'lessons', 'learned', 'from', 'tripping']
+# ['to', 'appease', 'the', 'gods']
+# ['shroom', 'for', 'new', 'tripper']
+# ['great', 'trip', 'playlist']
+# ['need', 'help', 'shrooms', 'and', 'acid', 'in', 'same', 'weekend', 'is', 'it', 'recommended']
+# ['meditating']
+# ['triipy', 'ar', 'en']
+# ['are', 'you', 'able', 'to', 'give', 'yourself', 'goosebumps']
+# ['word', 'of', 'mouth', 'oil', 'on', 'canvas', 'by', 'me', 'enjoy', 'grave', 'daisy', 'on', 'insta']
+# ['seizure', 'on', 'mushrooms', 'lingering', 'effects']
+# ['orchestra', 'on', 'psychedelics']
+# ['pharmather', 'expands', 'patent', 'portfolio', 'with', 'filing', 'of', 'us', 'patent', 'application', 'for', 'ketamine', 'and']
+# ['blue', 'lotus']
+# ['new', 'research', 'finds', 'promise', 'in', 'psychiatric', 'use', 'of', 'psilocybin', 'north', 'american', 'companies']
 
 # 10. Remove Stopwords, Make Bigrams and Lemmatize
 # Define functions for stopwords, bigrams, trigrams and lemmatization
@@ -178,7 +295,51 @@ nlp = spacy.load("en_core_web_sm")
 data_lemmatized = lemmatization(data_words_bigrams, allowed_postags=['NOUN', 'ADJ', 'VERB', 'ADV'])
 
 print("The result of lemmatization: ")
-print(data_lemmatized[0:])
+pprint(data_lemmatized[0:])
+
+# below is a sample output:
+# [['worth'],
+#  ['use', 'kid', 'even', 'know'],
+#  ['emesh', 'method', 'failsafe', 'administration', 'method', 'dmt', 'meo'],
+#  ['psychedelic', 'help', 'treat', 'people', 'cope', 'diabete'],
+#  ['alex',
+#   'grey',
+#   'necrophiliac',
+#   'rumor',
+#   'allegation',
+#   'hostile',
+#   'environment',
+#   'cosm'],
+#  ['evil', 'trip'],
+#  ['struggle', 'implement', 'lesson', 'learn', 'trip'],
+#  ['appease', 'god'],
+#  ['shroom', 'new', 'tripper'],
+#  ['great', 'trip', 'playlist'],
+#  ['need', 'help', 'shroom', 'acid', 'weekend', 'recommend'],
+#  ['meditate'],
+#  ['triipy', 'en'],
+#  ['able', 'give', 'goosebump'],
+#  ['word', 'mouth', 'oil', 'canvas', 'enjoy', 'grave', 'daisy', 'insta'],
+#  ['seizure', 'mushroom', 'linger', 'effect'],
+#  ['orchestra', 'psychedelic'],
+#  ['pharmather',
+#   'expand',
+#   'patent',
+#   'portfolio',
+#   'file',
+#   'patent',
+#   'application',
+#   'ketamine'],
+#  ['blue', 'lotus'],
+#  ['new',
+#   'research',
+#   'find',
+#   'promise',
+#   'psychiatric',
+#   'psilocybin',
+#   'north',
+#   'american',
+#   'company']]
 
 print("************** After lemmatization **************")
 
@@ -196,22 +357,69 @@ corpus = [id2word.doc2bow(text) for text in texts]
 
 # View
 print("View the word frequency: (corpus)")
-print(corpus)
+pprint(corpus)
 print("************** The end of the word frequency **************")
 # Generate the following frequency list:
-# Based on [['tip', 'get', 'job', 'python', 'developer']]
-# [[(4, 1), (5, 1), (6, 1), (7, 1), (8, 1)]]
 
 
 # Gensim creates a unique id for each word in the document. The produced corpus shown above is a mapping of (word_id, word_frequency).
 # For example, (0, 1) above implies, word id 0 occurs once in the first document. Likewise, word id 1 occurs twice and so on.
-# This is used as the input by the LDA model.
+# [[(0, 1)],
+#  [(1, 1), (2, 1), (3, 1), (4, 1)],
+#  [(5, 1), (6, 1), (7, 1), (8, 1), (9, 1), (10, 2)],
+#  [(11, 1), (12, 1), (13, 1), (14, 1), (15, 1), (16, 1)],
+#  [(17, 1), (18, 1), (19, 1), (20, 1), (21, 1), (22, 1), (23, 1), (24, 1)],
+#  [(25, 1), (26, 1)],
+#  [(26, 1), (27, 1), (28, 1), (29, 1), (30, 1)],
+#  [(31, 1), (32, 1)],
+#  [(33, 1), (34, 1), (35, 1)],
+#  [(26, 1), (36, 1), (37, 1)],
+#  [(13, 1), (34, 1), (38, 1), (39, 1), (40, 1), (41, 1)],
+#  [(42, 1)],
+#  [(43, 1), (44, 1)],
+#  [(45, 1), (46, 1), (47, 1)],
+#  [(48, 1), (49, 1), (50, 1), (51, 1), (52, 1), (53, 1), (54, 1), (55, 1)],
+#  [(56, 1), (57, 1), (58, 1), (59, 1)],
+#  [(15, 1), (60, 1)],
+#  [(61, 1), (62, 1), (63, 1), (64, 1), (65, 2), (66, 1), (67, 1)],
+#  [(68, 1), (69, 1)],
+#  [(33, 1),
+#   (70, 1),
+#   (71, 1),
+#   (72, 1),
+#   (73, 1),
+#   (74, 1),
+#   (75, 1),
+#   (76, 1),
+#   (77, 1)]]
 
 # Human readable format of corpus (term-frequency)
 termFrequencyList = [[(id2word[id], freq) for id, freq in cp] for cp in corpus[0:]]
 print("**************** printing hunman readable format of corpus ****************")
 for i in range(len(termFrequencyList)):
     print(termFrequencyList[i])
+
+# sample output:
+# [('worth', 1)]
+# [('even', 1), ('kid', 1), ('know', 1), ('use', 1)]
+# [('administration', 1), ('dmt', 1), ('emesh', 1), ('failsafe', 1), ('meo', 1), ('method', 2)]
+# [('cope', 1), ('diabete', 1), ('help', 1), ('people', 1), ('psychedelic', 1), ('treat', 1)]
+# [('alex', 1), ('allegation', 1), ('cosm', 1), ('environment', 1), ('grey', 1), ('hostile', 1), ('necrophiliac', 1), ('rumor', 1)]
+# [('evil', 1), ('trip', 1)]
+# [('trip', 1), ('implement', 1), ('learn', 1), ('lesson', 1), ('struggle', 1)]
+# [('appease', 1), ('god', 1)]
+# [('new', 1), ('shroom', 1), ('tripper', 1)]
+# [('trip', 1), ('great', 1), ('playlist', 1)]
+# [('help', 1), ('shroom', 1), ('acid', 1), ('need', 1), ('recommend', 1), ('weekend', 1)]
+# [('meditate', 1)]
+# [('en', 1), ('triipy', 1)]
+# [('able', 1), ('give', 1), ('goosebump', 1)]
+# [('canvas', 1), ('daisy', 1), ('enjoy', 1), ('grave', 1), ('insta', 1), ('mouth', 1), ('oil', 1), ('word', 1)]
+# [('effect', 1), ('linger', 1), ('mushroom', 1), ('seizure', 1)]
+# [('psychedelic', 1), ('orchestra', 1)]
+# [('application', 1), ('expand', 1), ('file', 1), ('ketamine', 1), ('patent', 2), ('pharmather', 1), ('portfolio', 1)]
+# [('blue', 1), ('lotus', 1)]
+# [('new', 1), ('american', 1), ('company', 1), ('find', 1), ('north', 1), ('promise', 1), ('psilocybin', 1), ('psychiatric', 1), ('research', 1)]
 print("**************** end of printing hunman readable format of corpus ****************")
 
 
@@ -232,98 +440,102 @@ lda_model = gensim.models.ldamodel.LdaModel(corpus=corpus,
 
 # 13. View the topics in LDA model
 
-# Print the Keyword in the 20 topics
+# Print the Keyword in the 10 topics
 print("************** Print the keyword in the 20 topics below **************")
 pprint(lda_model.print_topics())
+
 doc_lda = lda_model[corpus]  
 
-# below is the output
+print("************** Print doc_lda below **************")
+
+# below is a sample output
 # [(0,
-#   '0.013*"describe" + 0.013*"book" + 0.013*"desperate" + 0.013*"json" + '
-#   '0.013*"extract" + 0.013*"video" + 0.013*"project" + 0.013*"organize" + '
-#   '0.013*"large" + 0.013*"run"'),
+#   '0.013*"enjoy" + 0.013*"canvas" + 0.013*"effect" + 0.013*"word" + '
+#   '0.013*"oil" + 0.013*"mouth" + 0.013*"insta" + 0.013*"grave" + '
+#   '0.013*"mushroom" + 0.013*"daisy"'),
 #  (1,
-#   '0.070*"file" + 0.070*"help" + 0.070*"input" + 0.070*"need" + 0.070*"user" + '
-#   '0.070*"save" + 0.070*"algorithm" + 0.070*"hint" + 0.070*"look" + '
-#   '0.070*"link"'),
+#   '0.178*"trip" + 0.178*"evil" + 0.008*"grave" + 0.008*"enjoy" + '
+#   '0.008*"effect" + 0.008*"word" + 0.008*"oil" + 0.008*"mouth" + 0.008*"insta" '
+#   '+ 0.008*"mushroom"'),
 #  (2,
-#   '0.059*"notification" + 0.059*"email" + 0.059*"error" + 0.059*"send" + '
-#   '0.059*"script" + 0.059*"generate" + 0.059*"ask" + 0.059*"thread" + '
-#   '0.059*"monday" + 0.059*"weekly"'),
+#   '0.076*"diabete" + 0.076*"psychedelic" + 0.076*"people" + 0.076*"help" + '
+#   '0.076*"cope" + 0.076*"treat" + 0.076*"kid" + 0.076*"even" + 0.076*"know" + '
+#   '0.076*"use"'),
 #  (3,
-#   '0.212*"challenge" + 0.010*"describe" + 0.010*"line" + 0.010*"json" + '
-#   '0.010*"extract" + 0.010*"video" + 0.010*"project" + 0.010*"organize" + '
-#   '0.010*"large" + 0.010*"request"'),
+#   '0.152*"able" + 0.152*"give" + 0.152*"goosebump" + 0.007*"grave" + '
+#   '0.007*"canvas" + 0.007*"effect" + 0.007*"word" + 0.007*"oil" + '
+#   '0.007*"mouth" + 0.007*"insta"'),
 #  (4,
-#   '0.013*"describe" + 0.013*"book" + 0.013*"desperate" + 0.013*"json" + '
-#   '0.013*"extract" + 0.013*"video" + 0.013*"project" + 0.013*"organize" + '
-#   '0.013*"large" + 0.013*"run"'),
+#   '0.106*"help" + 0.106*"recommend" + 0.106*"need" + 0.106*"shroom" + '
+#   '0.106*"acid" + 0.106*"weekend" + 0.005*"enjoy" + 0.005*"insta" + '
+#   '0.005*"daisy" + 0.005*"goosebump"'),
 #  (5,
-#   '0.013*"describe" + 0.013*"book" + 0.013*"desperate" + 0.013*"json" + '
-#   '0.013*"extract" + 0.013*"video" + 0.013*"project" + 0.013*"organize" + '
-#   '0.013*"large" + 0.013*"run"'),
+#   '0.178*"blue" + 0.178*"lotus" + 0.008*"word" + 0.008*"oil" + 0.008*"mouth" + '
+#   '0.008*"insta" + 0.008*"grave" + 0.008*"enjoy" + 0.008*"daisy" + '
+#   '0.008*"linger"'),
 #  (6,
-#   '0.106*"video" + 0.105*"project" + 0.105*"large" + 0.105*"organize" + '
-#   '0.105*"describe" + 0.105*"book" + 0.005*"game" + 0.005*"data" + '
-#   '0.005*"scrape" + 0.005*"extract"'),
+#   '0.013*"enjoy" + 0.013*"canvas" + 0.013*"effect" + 0.013*"word" + '
+#   '0.013*"oil" + 0.013*"mouth" + 0.013*"insta" + 0.013*"grave" + '
+#   '0.013*"mushroom" + 0.013*"daisy"'),
 #  (7,
-#   '0.013*"describe" + 0.013*"book" + 0.013*"desperate" + 0.013*"json" + '
-#   '0.013*"extract" + 0.013*"video" + 0.013*"project" + 0.013*"organize" + '
-#   '0.013*"large" + 0.013*"run"'),
+#   '0.214*"worth" + 0.010*"enjoy" + 0.010*"linger" + 0.010*"effect" + '
+#   '0.010*"word" + 0.010*"oil" + 0.010*"mouth" + 0.010*"insta" + 0.010*"grave" '
+#   '+ 0.010*"mushroom"'),
 #  (8,
-#   '0.176*"extract" + 0.176*"json" + 0.008*"describe" + 0.008*"book" + '
-#   '0.008*"desperate" + 0.008*"video" + 0.008*"project" + 0.008*"organize" + '
-#   '0.008*"large" + 0.008*"run"'),
+#   '0.013*"enjoy" + 0.013*"canvas" + 0.013*"effect" + 0.013*"word" + '
+#   '0.013*"oil" + 0.013*"mouth" + 0.013*"insta" + 0.013*"grave" + '
+#   '0.013*"mushroom" + 0.013*"daisy"'),
 #  (9,
-#   '0.117*"need" + 0.117*"calculator" + 0.117*"help" + 0.117*"python" + '
-#   '0.117*"fail" + 0.006*"organize" + 0.006*"large" + 0.006*"extract" + '
-#   '0.006*"video" + 0.006*"json"'),
+#   '0.118*"trip" + 0.118*"playlist" + 0.118*"great" + 0.118*"en" + '
+#   '0.118*"triipy" + 0.006*"mouth" + 0.006*"grave" + 0.006*"oil" + '
+#   '0.006*"canvas" + 0.006*"word"'),
 #  (10,
-#   '0.187*"line" + 0.096*"text" + 0.096*"file" + 0.096*"good" + 0.096*"use" + '
-#   '0.096*"dash" + 0.005*"describe" + 0.005*"organize" + 0.005*"book" + '
-#   '0.005*"work"'),
+#   '0.013*"enjoy" + 0.013*"canvas" + 0.013*"effect" + 0.013*"word" + '
+#   '0.013*"oil" + 0.013*"mouth" + 0.013*"insta" + 0.013*"grave" + '
+#   '0.013*"mushroom" + 0.013*"daisy"'),
 #  (11,
-#   '0.013*"describe" + 0.013*"book" + 0.013*"desperate" + 0.013*"json" + '
-#   '0.013*"extract" + 0.013*"video" + 0.013*"project" + 0.013*"organize" + '
-#   '0.013*"large" + 0.013*"run"'),
+#   '0.098*"method" + 0.098*"patent" + 0.050*"pharmather" + 0.050*"ketamine" + '
+#   '0.050*"file" + 0.050*"portfolio" + 0.050*"expand" + 0.050*"application" + '
+#   '0.050*"emesh" + 0.050*"dmt"'),
 #  (12,
-#   '0.075*"specific" + 0.075*"include" + 0.075*"folder" + 0.075*"filename" + '
-#   '0.075*"recursively" + 0.075*"edit" + 0.075*"directory" + 0.075*"advice" + '
-#   '0.075*"name" + 0.075*"extension"'),
+#   '0.118*"struggle" + 0.118*"trip" + 0.118*"implement" + 0.118*"learn" + '
+#   '0.118*"lesson" + 0.006*"grave" + 0.006*"word" + 0.006*"oil" + 0.006*"mouth" '
+#   '+ 0.006*"linger"'),
 #  (13,
-#   '0.081*"work" + 0.081*"make" + 0.081*"random" + 0.081*"walk" + '
-#   '0.081*"constrain" + 0.081*"python" + 0.081*"linear" + 0.081*"regression" + '
-#   '0.081*"idiot" + 0.004*"dancing"'),
+#   '0.118*"effect" + 0.118*"mushroom" + 0.118*"linger" + 0.118*"seizure" + '
+#   '0.118*"meditate" + 0.006*"oil" + 0.006*"en" + 0.006*"insta" + 0.006*"word" '
+#   '+ 0.006*"grave"'),
 #  (14,
-#   '0.013*"describe" + 0.013*"book" + 0.013*"desperate" + 0.013*"json" + '
-#   '0.013*"extract" + 0.013*"video" + 0.013*"project" + 0.013*"organize" + '
-#   '0.013*"large" + 0.013*"run"'),
+#   '0.178*"appease" + 0.178*"god" + 0.008*"enjoy" + 0.008*"canvas" + '
+#   '0.008*"effect" + 0.008*"word" + 0.008*"oil" + 0.008*"mouth" + 0.008*"insta" '
+#   '+ 0.008*"grave"'),
 #  (15,
-#   '0.117*"tip" + 0.117*"job" + 0.117*"developer" + 0.117*"get" + '
-#   '0.117*"python" + 0.006*"video" + 0.006*"extract" + 0.006*"json" + '
-#   '0.006*"organize" + 0.006*"desperate"'),
+#   '0.053*"oil" + 0.053*"word" + 0.053*"hostile" + 0.053*"grey" + 0.053*"cosm" '
+#   '+ 0.053*"allegation" + 0.053*"alex" + 0.053*"environment" + 0.053*"rumor" + '
+#   '0.053*"mouth"'),
 #  (16,
-#   '0.093*"help" + 0.093*"python" + 0.048*"dataframe" + 0.048*"put" + '
-#   '0.048*"run" + 0.048*"request" + 0.048*"open" + 0.048*"datum" + 0.048*"line" '
-#   '+ 0.048*"try"'),
+#   '0.152*"tripper" + 0.152*"shroom" + 0.152*"new" + 0.007*"enjoy" + '
+#   '0.007*"goosebump" + 0.007*"word" + 0.007*"oil" + 0.007*"mouth" + '
+#   '0.007*"insta" + 0.007*"grave"'),
 #  (17,
-#   '0.096*"guess" + 0.096*"number" + 0.096*"read" + 0.096*"error" + '
-#   '0.096*"game" + 0.096*"much" + 0.096*"input" + 0.005*"video" + 0.005*"large" '
-#   '+ 0.005*"project"'),
+#   '0.013*"enjoy" + 0.013*"canvas" + 0.013*"effect" + 0.013*"word" + '
+#   '0.013*"oil" + 0.013*"mouth" + 0.013*"insta" + 0.013*"grave" + '
+#   '0.013*"mushroom" + 0.013*"daisy"'),
 #  (18,
-#   '0.176*"blockchain" + 0.176*"voting" + 0.008*"json" + 0.008*"extract" + '
-#   '0.008*"video" + 0.008*"project" + 0.008*"organize" + 0.008*"large" + '
-#   '0.008*"describe" + 0.008*"request"'),
+#   '0.081*"research" + 0.081*"company" + 0.081*"psilocybin" + 0.081*"promise" + '
+#   '0.081*"north" + 0.081*"find" + 0.081*"new" + 0.081*"american" + '
+#   '0.081*"psychiatric" + 0.004*"enjoy"'),
 #  (19,
-#   '0.013*"describe" + 0.013*"book" + 0.013*"desperate" + 0.013*"json" + '
-#   '0.013*"extract" + 0.013*"video" + 0.013*"project" + 0.013*"organize" + '
-#   '0.013*"large" + 0.013*"run"')]
+#   '0.013*"enjoy" + 0.013*"canvas" + 0.013*"effect" + 0.013*"word" + '
+#   '0.013*"oil" + 0.013*"mouth" + 0.013*"insta" + 0.013*"grave" + '
+#   '0.013*"mushroom" + 0.013*"daisy"')]
+
 
 
 # 14. Compute Model Perplexity and Coherence Score
 # Compute Perplexity
 print('\nPerplexity: ', lda_model.log_perplexity(corpus))  # a measure of how good the model is. lower the better.
-# Perplexity:  -5.775213731318405
+# Perplexity:  -5.834839066793752
 
 
 # Compute Coherence Score
